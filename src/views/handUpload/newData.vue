@@ -144,115 +144,114 @@
   </div>
 </template>
 <script>
-import { getSourceList,delSource ,updateSource} from '@/api/bqb'
+import { getSourceList, delSource, updateSource } from '@/api/bqb'
 export default {
-  name:'editSource',
-  data:function(){
+  name: 'editSource',
+  data: function() {
     return {
-      tableData:[],
-      dialogTableVisible:false,
-      editTableData:{},
-      total:0,
-      curpage:1,
-      pageSize:15,
+      tableData: [],
+      dialogTableVisible: false,
+      editTableData: {},
+      total: 0,
+      curpage: 1,
+      pageSize: 15,
       options: [{
-          value: '1',
-          label: '最新表情'
-        },{
-          value: '3',
-          label: '汪星人'
-        },
-        {
-          value: '4',
-          label: '喵星人'
-        }],
         value: '1',
-        loading:{
-          table: false
-        },
-        radio: true
+        label: '最新表情'
+      }, {
+        value: '3',
+        label: '汪星人'
+      },
+      {
+        value: '4',
+        label: '喵星人'
+      }],
+      value: '1',
+      loading: {
+        table: false
+      },
+      radio: true
     }
   },
-  mounted(){
-    this.getTypeList(1,true);
+  mounted() {
+    this.getTypeList(1, true)
   },
-  methods:{
-    getTypeList(type,isIndex){
+  methods: {
+    getTypeList(type, isIndex) {
       console.log(type)
       console.log(isIndex === true)
       this.loading.table = true
-      if(type){
+      if (type) {
         type = parseInt(type)
       }
       // isIndex = isIndex == 'true'? true: false
-      this.$get("bq/queryNewBq",{isShowIndex:isIndex,typeId:type,pageSize:this.pageSize,curPage:this.curpage}).then(res => {
-        this.total = res.data.count;
-        this.tableData = res.data.rows;
+      this.$get('bq/queryNewBq', { isShowIndex: isIndex, typeId: type, pageSize: this.pageSize, curPage: this.curpage }).then(res => {
+        this.total = res.data.count
+        this.tableData = res.data.rows
         this.loading.table = false
       }).catch(error => {
-        this.$message.error("查询失败");
+        this.$message.error('查询失败')
         this.loading.table = false
       })
     },
-    handleEdit(index,item){
-      console.log(index,',,,,,',item)
-      this.dialogTableVisible = true;
-      this.editTableData = item;
+    handleEdit(index, item) {
+      console.log(index, ',,,,,', item)
+      this.dialogTableVisible = true
+      this.editTableData = item
     },
-    handleDelete(index,item){
-      console.log(index,',,,,,',item)
-      let self = this;
+    handleDelete(index, item) {
+      console.log(index, ',,,,,', item)
+      const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          //删除 操作
-          this.$post("bq/delBq",{id:item.id}).then(res =>{
-            self.$message({
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        // 删除 操作
+        this.$post('bq/delBq', { id: item.id }).then(res => {
+          self.$message({
             type: 'success',
             message: '删除成功!'
-          });
-          self.getTypeList();
           })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-
-    },
-    submitForm(){
-      console.log(this.editTableData);
-      //修改
-      this.$post("bq/updateBq",this.editTableData).then(res => {
-        this.$message("修改成功")
-        this.dialogTableVisible = false;
-        self.getTypeList();
-      }).catch(error => {
-        this.$message.error("修改失败")
-        this.dialogTableVisible = false;
+          self.getTypeList()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
-    resetForm(){
-      this.dialogTableVisible = false;
+    submitForm() {
+      console.log(this.editTableData)
+      // 修改
+      this.$post('bq/updateBq', this.editTableData).then(res => {
+        this.$message('修改成功')
+        this.dialogTableVisible = false
+        self.getTypeList()
+      }).catch(error => {
+        this.$message.error('修改失败')
+        this.dialogTableVisible = false
+      })
+    },
+    resetForm() {
+      this.dialogTableVisible = false
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.pageSize = val;
+      console.log(`每页 ${val} 条`)
+      this.pageSize = val
       this.getTypeList()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.curpage = val;
-      this.getTypeList();
+      console.log(`当前页: ${val}`)
+      this.curpage = val
+      this.getTypeList()
     },
     handleImageScucess(file) {
       console.log(file)
-      this.editTableData.path = file.data.imgPath;
-    },
+      this.editTableData.path = file.data.imgPath
+    }
   }
 }
 </script>

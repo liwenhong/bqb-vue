@@ -28,6 +28,9 @@
          <el-form-item label="图片名称" prop="imgName">
           <el-input type="text" class="s-input" v-model="imgName" auto-complete="off" placeholder="以 - 号分各"></el-input>
         </el-form-item>
+        <el-form-item label="系列描述" prop="serieDescrib">
+          <el-input type="textarea" class="s-input" v-model="ruleForm.serieDescrib" auto-complete="off" placeholder="系列描述"></el-input>
+        </el-form-item>
         <el-form-item label="是否热门" prop="isHot">
           <el-switch
             v-model="ruleForm.isHot"
@@ -55,10 +58,10 @@
   </div>
 </template>
 <script>
-import Upload from "@/components/Upload/singleImage";
-import { addImgSourceType,addImgSource } from "@/api/bqb"
+import Upload from '@/components/Upload/singleImage'
+import { addImgSourceType, addImgSource } from '@/api/bqb'
 export default {
-  name: "addSource",
+  name: 'addSource',
   data: function() {
     // var validate = (rule, value, callback) => {
     //   if (value === "") {
@@ -67,110 +70,112 @@ export default {
     //   callback();
     // };
     return {
-      temp:0,
-      searchArr:[],
-      describArr:[],
+      temp: 0,
+      searchArr: [],
+      describArr: [],
       imgNameArr: [],
-      searchString:'',
-      describString:'',
+      searchString: '',
+      describString: '',
       imgName: '',
       ruleForm: {
-        searchKey: "",
-        path: "",
-        imgName:"",
-        typeId:"2",//栏目id
-        isTop:false,//是否显示在首页，默认false
-        imgDescribe:'',//图片描述
-        uid:'',
-        serieName:'',//系列名称
-        serieId:'',
-        isHot:''
+        searchKey: '',
+        path: '',
+        imgName: '',
+        typeId: '2', // 栏目id
+        isTop: false, // 是否显示在首页，默认false
+        imgDescribe: '', // 图片描述
+        uid: '',
+        serieName: '', // 系列名称
+        serieId: '',
+        isHot: '',
+        serieDescrib: ''
       },
       // rules: {
       //   typename: [{ validator: validate, trigger: "blur" }],
       //   name: [{ validator: validate, trigger: "blur" }]
       // },
       options: [{
-          value: '2',
-          label: '系列图片'
-        }],
-        // value: ''
-    };
+        value: '2',
+        label: '系列图片'
+      }]
+      // value: ''
+    }
   },
-  mounted(){
-    let pa = this.$route.params
+  mounted() {
+    const pa = this.$route.params
     console.log(pa)
-    if(pa.serieId){
+    if (pa.serieId) {
       this.ruleForm.serieId = pa.serieId
     }
   },
-  components:{
+  components: {
     Upload
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.searchArr = this.searchString.split('-');
-          this.describArr = this.describString.split('-');
+          this.searchArr = this.searchString.split('-')
+          this.describArr = this.describString.split('-')
           this.imgNameArr = this.imgName.split('-')
-          this.$refs.upload.submitUpload();
-          this.temp =0;
+          this.$refs.upload.submitUpload()
+          this.temp = 0
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields();
-      this.$refs.upload.clearFiles();
-      this.ruleForm.uid = "";
-      this.temp = 0;
-      this.searchArr =[];
-      this.describArr = [];
+      this.$refs[formName].resetFields()
+      this.$refs.upload.clearFiles()
+      this.ruleForm.uid = ''
+      this.temp = 0
+      this.searchArr = []
+      this.describArr = []
       this.ruleForm.serieId = null
     },
     async uploadImg(e) {
-      //创建素材类型
+      // 创建素材类型
       // await addImgSourceType(this.ruleForm.typename).then(res => {
       //   //获得类型的id 并赋值到pid上
       //   this.ruleForm.pid = res.data.id;
       // })
-      if(this.ruleForm.uid == null || this.ruleForm.uid == '' || this.ruleForm.uid == undefined){
-        this.ruleForm.uid = e.uid;
-        if(!!this.ruleForm.serieId && this.ruleForm.serieId != ''){
+      if (this.ruleForm.uid == null || this.ruleForm.uid == '' || this.ruleForm.uid == undefined) {
+        this.ruleForm.uid = e.uid
+        if (!!this.ruleForm.serieId && this.ruleForm.serieId != '') {
 
-        }else{
-          this.ruleForm.serieId = e.uid;
+        } else {
+          this.ruleForm.serieId = e.uid
         }
       }
-      this.ruleForm.path = e.imgPath;
+      this.ruleForm.path = e.imgPath
       // this.ruleForm.imgName = e.imgName;
-      this.ruleForm.imgName = this.imgNameArr[this.temp];
+      this.ruleForm.imgName = this.imgNameArr[this.temp]
       this.ruleForm.searchKey = this.searchArr[this.temp]
       this.ruleForm.imgDescribe = this.describArr[this.temp]
+
       // this.ruleForm.uid = e.uid;
 
-      console.log(this.ruleForm);
-      this.$post('bq/add',this.ruleForm).then(res => {
-        console.log(res);
+      console.log(this.ruleForm)
+      this.$post('bq/add', this.ruleForm).then(res => {
+        console.log(res)
       })
-      this.temp++;
+      this.temp++
     },
     removeImage(e) {
-      console.log(e);
+      console.log(e)
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .add-source {
   margin-top: 50px;
-  margin-left: 20px;
+  margin-left: 0px;
 }
 .s-input {
-  width: 40%;
+  width: 100%;
 }
 .btn {
   margin-top: 68px;

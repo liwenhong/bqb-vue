@@ -69,7 +69,7 @@
           <el-form-item label="图片">
             <!-- <el-input v-model="editTableData.name"></el-input> -->
             <div>
-              <img  :src="editTableData.path" alt="">
+              <img style="width:100%;"  :src="editTableData.path" alt="">
               <el-upload
                 class="upload-demo"
                 ref="upload"
@@ -83,6 +83,9 @@
           </el-form-item>
           <el-form-item label="搜索关键字">
             <el-input v-model="editTableData.sourceKey"></el-input>
+          </el-form-item>
+          <el-form-item label="排序">
+            <el-input type="number" v-model="editTableData.sort" placeholder="值越大排名越前"></el-input>
           </el-form-item>
           <el-form-item label="图片名称">
             <el-input v-model="editTableData.imgName"></el-input>
@@ -107,94 +110,86 @@
   </div>
 </template>
 <script>
-import { getSourceList,delSource ,updateSource} from '@/api/bqb'
+import { getSourceList, delSource, updateSource } from '@/api/bqb'
 export default {
-  name:'editSource',
-  data:function(){
+  name: 'editSource',
+  data: function() {
     return {
-      tableData:[],
-      dialogTableVisible:false,
-      editTableData:{},
-      total:0,
-      curpage:1,
-      pagesize:15
+      tableData: [],
+      dialogTableVisible: false,
+      editTableData: {},
+      total: 0,
+      curpage: 1,
+      pagesize: 15
     }
   },
-  mounted(){
-    this.getTypeList();
+  mounted() {
+    this.getTypeList()
   },
-  methods:{
-    getTypeList(){
-      getSourceList(this.pagesize,this.curpage).then(res => {
-        console.log(res);
-        this.total = res.data.count;
-        this.tableData = res.data.rows;
+  methods: {
+    getTypeList() {
+      getSourceList(this.pagesize, this.curpage).then(res => {
+        this.total = res.data.count
+        this.tableData = res.data.rows
       }).catch(error => {
         console.log(error)
       })
     },
-    handleEdit(index,item){
-      console.log(index,',,,,,',item)
-      this.dialogTableVisible = true;
-      this.editTableData = item;
+    handleEdit(index, item) {
+      this.dialogTableVisible = true
+      this.editTableData = item
     },
-    handleDelete(index,item){
-      console.log(index,',,,,,',item)
-      let self = this;
+    handleDelete(index, item) {
+      const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          //删除 操作
-          delSource(item.id).then(res =>{
-            self.$message({
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        // 删除 操作
+        delSource(item.id).then(res => {
+          self.$message({
             type: 'success',
             message: '删除成功!'
-          });
-          self.getTypeList();
           })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-
-    },
-    submitForm(){
-      console.log(this.editTableData);
-      if(this.editTableData.typename == ""){
-        this.$message('类型名称不能为空');
-        return ;
-      }
-      //修改
-      updateSource(this.editTableData).then(res =>{
-        console.log(res)
-        this.$message("修改成功")
-        this.dialogTableVisible = false;
-      }).catch(error => {
-        this.$message("修改失败")
+          self.getTypeList()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
-    resetForm(){
-      this.dialogTableVisible = false;
+    submitForm() {
+      if (this.editTableData.typename === '') {
+        this.$message('类型名称不能为空')
+        return
+      }
+      // 修改
+      updateSource(this.editTableData).then(res => {
+        console.log(res)
+        this.$message('修改成功')
+        this.dialogTableVisible = false
+      }).catch(() => {
+        this.$message('修改失败')
+      })
+    },
+    resetForm() {
+      this.dialogTableVisible = false
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.pagesize = val;
+      this.pagesize = val
       this.getTypeList()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.curpage = val;
-      this.getTypeList();
+      this.curpage = val
+      this.getTypeList()
     },
     handleImageScucess(file) {
-      console.log(file)
-      this.editTableData.path = file.data.imgPath;
-    },
+      this.editTableData.path = file.data.imgPath
+    }
   }
 }
 </script>

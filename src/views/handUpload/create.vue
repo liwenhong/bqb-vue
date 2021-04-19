@@ -44,10 +44,10 @@
   </div>
 </template>
 <script>
-import Upload from "@/components/Upload/singleImage";
-import { addImgSourceType,addImgSource } from "@/api/bqb"
+import Upload from '@/components/Upload/singleImage';
+import { addImgSourceType, addImgSource } from '@/api/bqb'
 export default {
-  name: "addSource",
+  name: 'addSource',
   data: function() {
     // var validate = (rule, value, callback) => {
     //   if (value === "") {
@@ -57,62 +57,62 @@ export default {
     // };
     return {
       ruleForm: {
-        searchKey: "",
-        path: "",
-        imgName:"",
-        typeId:"1",//栏目id
-        isShowIndex:false,//是否显示在首页，默认false
-        imgDescribe:'',//图片描述
-        uid:''
+        searchKey: '',
+        path: '',
+        imgName: '',
+        typeId: '1', // 栏目id
+        isShowIndex: false, // 是否显示在首页，默认false
+        imgDescribe: '', // 图片描述
+        uid: ''
       },
       // rules: {
       //   typename: [{ validator: validate, trigger: "blur" }],
       //   name: [{ validator: validate, trigger: "blur" }]
       // },
       options: [{
-          value: '1',
-          label: '最新表情'
-        },{
-          value: '3',
-          label: '汪星人'
-        },
-        {
-          value: '4',
-          label: '喵星人'
-        }],
-        // value: ''
-    };
+        value: '1',
+        label: '最新表情'
+      }, {
+        value: '3',
+        label: '汪星人'
+      },
+      {
+        value: '4',
+        label: '喵星人'
+      }]
+      // value: ''
+    }
   },
-  components:{
+  components: {
     Upload
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
-          this.$refs.upload.submitUpload();
+          console.log(this.ruleForm)
+          this.$refs.upload.submitUpload()
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields();
-      this.$refs.upload.clearFiles();
+      this.$refs[formName].resetFields()
+      this.$refs.upload.clearFiles()
     },
     async uploadImg(e) {
-      //创建素材类型
+      // 创建素材类型
       // await addImgSourceType(this.ruleForm.typename).then(res => {
       //   //获得类型的id 并赋值到pid上
       //   this.ruleForm.pid = res.data.id;
       // })
-      this.ruleForm.path = e.imgPath;
+      this.ruleForm.path = e.imgPath
       // this.ruleForm.imgName = e.imgName;
-      this.ruleForm.uid = e.uid;
-      this.$post('bq/add',this.ruleForm).then(res => {
-        console.log(res);
+      this.ruleForm.uid = e.uid
+      this.$post('bq/add', this.ruleForm).then(res => {
+        console.log(res)
       })
 
       // addImgSource(this.ruleForm).then(da => {
@@ -120,18 +120,18 @@ export default {
       // })
     },
     removeImage(e) {
-      console.log(e);
+      console.log(e)
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .add-source {
   margin-top: 50px;
-  margin-left: 20px;
+  margin-left: 0px;
 }
 .s-input {
-  width: 40%;
+  width: 100%;
 }
 .btn {
   margin-top: 68px;
@@ -145,6 +145,12 @@ export default {
 .el-upload--picture-card {
   border: 0;
 }
+</style>
+
+<style>
+.demo-ruleForm .el-form-item{
+    margin-bottom: 5px;
+  }
 </style>
 
 

@@ -6,7 +6,7 @@
               list-type="picture-card"
               action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
               multiple
-              :auto-upload="false" :on-success="handleImageScucess" :on-remove="rmImage" :before-upload="beforeUpload" ref="uploadimgs" name="avatar">
+              :auto-upload="autoUpload" :on-success="handleImageScucess" :on-remove="rmImage" :before-upload="beforeUpload" ref="uploadimgs" name="avatar">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           </el-upload>
@@ -14,46 +14,49 @@
 </template>
 
 <script>
-import { getToken,uploadImg } from "@/api/qiniu";
+import { getToken, uploadImg } from '@/api/qiniu'
 
 export default {
-  name: "singleImageUpload3",
+  name: 'singleImageUpload3',
+  props: {
+    autoUpload: false
+  },
   computed: {
 
   },
   data() {
     return {
-      uid:''
-    };
+      uid: ''
+    }
   },
   methods: {
     rmImage(file) {
-      console.log(file);
-      this.$emit('removeImg',file);
+      console.log(file)
+      this.$emit('removeImg', file)
     },
     emitInput(val) {
-      this.$emit("input", val);
+      this.$emit('input', val)
     },
     submitUpload() {
       console.log('submit')
-      this.$refs.uploadimgs.submit();
+      this.$refs.uploadimgs.submit()
     },
 
     handleImageScucess(file) {
       console.log(file)
-      file.data.uid = this.uid;
-      this.emitInput(file.data);
+      file.data.uid = this.uid
+      this.emitInput(file.data)
     },
     beforeUpload(file) {
-     console.log(file);
-     this.uid = file.uid;
-     console.log(this.uid);
+      console.log(file)
+      this.uid = file.uid
+      console.log(this.uid)
     },
-    clearFiles(){
-      this.$refs.uploadimgs.clearFiles();
+    clearFiles() {
+      this.$refs.uploadimgs.clearFiles()
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

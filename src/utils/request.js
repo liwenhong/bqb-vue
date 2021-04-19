@@ -3,11 +3,11 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 10000, // request timeout
+  timeout: 10000 // request timeout
   // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 })
 
@@ -64,5 +64,4 @@ const service = axios.create({
 //     return Promise.reject(error)
 //   })
 
-
-  export default service
+export default service

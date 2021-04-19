@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import { getToken,uploadImg } from "@/api/qiniu";
+import { getToken, uploadImg } from '@/api/qiniu'
 
 export default {
-  name: "singleImageUpload3",
+  name: 'singleImageUpload3',
   props: {
-    title:Object
+    title: Object
   },
   computed: {
     // imageUrl() {
@@ -23,38 +23,38 @@ export default {
   },
   data() {
     return {
-      tempUrl: "",
-      uid:'',
-      dataObj: { title:this.title }
-    };
+      tempUrl: '',
+      uid: '',
+      dataObj: { title: this.title }
+    }
   },
   methods: {
     rmImage(file) {
-      console.log(file);
-      this.$emit('removeImg',file);
+      console.log(file)
+      this.$emit('removeImg', file)
     },
     emitInput(val) {
-      this.$emit("input", val);
+      this.$emit('input', val)
     },
     submitUpload() {
       console.log('submit')
-      this.$refs.uploadimgs.submit();
+      this.$refs.uploadimgs.submit()
     },
 
     handleImageScucess(file) {
       console.log(file)
-      if(file){
-        file.data.uid = this.uid;
+      if (file) {
+        file.data.uid = this.uid
       }
-      this.emitInput(file.data);
+      this.emitInput(file.data)
     },
     beforeUpload(file) {
-     console.log(file);
-     this.uid = file.uid;
-     console.log(this.uid);
+      console.log(file)
+      this.uid = file.uid
+      console.log(this.uid)
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

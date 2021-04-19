@@ -10,7 +10,7 @@
         <el-card :body-style="{ padding: '0px' }">
           <img :src="o.path" class="image">
           <div style="padding: 14px;">
-            <span>{{o.imgDescribe}}</span>
+            <span class="bq-descripe">{{o.imgDescribe}}</span>
             <div class="bottom clearfix">
               <time class="time">{{o.updatedAt.substr(0,10)}}</time>
               <el-button type="text" class="button" @click="editBq(o.id,o)">编辑</el-button>
@@ -28,6 +28,9 @@
           </el-form-item>
           <el-form-item label="系列名称">
             <el-input v-model="editTableData.serieName"></el-input>
+          </el-form-item>
+          <el-form-item label="系列描述">
+            <el-input v-model="editTableData.serieDescrib" placeholder="修改系列的第一张"></el-input>
           </el-form-item>
           <el-form-item label="表情描述">
             <el-input v-model="editTableData.imgDescribe"></el-input>
@@ -90,108 +93,112 @@
 </template>
 
 <script>
-import { getHotData } from '@/api/bqb'
+// import { getHotData } from '@/api/bqb'
 export default {
   data() {
     return {
       currentDate: new Date(),
-      currentPage:1,
-      pageSize:5,
-      topLists:[],
-      total:0,
-      dialogTableVisible:false,
-      editTableData:{}
-    };
+      currentPage: 1,
+      pageSize: 5,
+      topLists: [],
+      total: 0,
+      dialogTableVisible: false,
+      editTableData: {}
+    }
   },
-  mounted(){
-    this.getData();
+  mounted() {
+    this.getData()
   },
   methods: {
-    addSerieById(serieId){
-      this.$router.push({name:'addSerieBq', params: { serieId: serieId}})
+    addSerieById(serieId) {
+      this.$router.push({ name: 'addSerieBq', params: { serieId: serieId }})
     },
-    getData(){
+    getData() {
       // getHotData(this.currentPage,this.pageSize).then(res => {
       //   this.total = res.data.count;
       //   this.topLists = res.data.data;
       // }).catch(error => {
       //   console.log(error);
       // })
-      this.$get("bq/querySerieBq",{curPage:this.currentPage,pageSize:this.pageSize,isHot:false,isTop:false}).then(res => {
-        this.topLists = res.data.lists;
-        this.total = res.data.total;
+      this.$get('bq/querySerieBq', { curPage: this.currentPage, pageSize: this.pageSize, isHot: false, isTop: false, subLimit: 99 }).then(res => {
+        this.topLists = res.data.lists
+        this.total = res.data.total
       })
     },
-    serieDel(serieId){
+    serieDel(serieId) {
       this.$confirm('确定删除该系列表情, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          //删除，更新
-          this.$post("bq/delSerieBq",{serieId:serieId}).then(res => {
-            this.$message({
-              type: 'info',
-              message: '删除成功'
-            });
-            this.getData();
-          }).catch(error => {
-            this.$message({
-              type: 'info',
-              message: '删除失败'
-            });
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        // 删除，更新
+        this.$post('bq/delSerieBq', { serieId: serieId }).then(res => {
+          this.$message({
+            type: 'info',
+            message: '删除成功'
           })
+          this.getData()
         }).catch(() => {
-          // this.$message({
-          //   type: 'info',
-          //   message: '已取消删除'
-          // });
-        });
+          this.$message({
+            type: 'info',
+            message: '删除失败'
+          })
+        })
+      }).catch(() => {
+        // this.$message({
+        //   type: 'info',
+        //   message: '已取消删除'
+        // });
+      })
     },
-    delById(id){
-      this.$post("bq/delBq",{id:id}).then(res =>{
+    delById(id) {
+      this.$post('bq/delBq', { id: id }).then(res => {
         this.$message({
           type: 'info',
           message: '删除成功'
-        });
-        this.getData();
-      }).catch(error => {
+        })
+        this.getData()
+      }).catch(() => {
         this.$message({
           type: 'warning',
           message: '删除失败'
-        });
+        })
       })
     },
-    editBq(id,item){
-      this.dialogTableVisible = true;
-      this.editTableData = item;
+    editBq(id, item) {
+      this.dialogTableVisible = true
+      this.editTableData = item
     },
-    submitForm(){
-      console.log(this.editTableData);
-      this.$post("bq/updateBq",this.editTableData).then(res => {
-        this.$message("修改成功")
-        this.dialogTableVisible = false;
-      }).catch(error => {
-        this.$message.error("修改失败")
-        this.dialogTableVisible = false;
+    submitForm() {
+      console.log(this.editTableData)
+      this.$post('bq/updateBq', this.editTableData).then(res => {
+        this.$message('修改成功')
+        this.dialogTableVisible = false
+      }).catch(() => {
+        this.$message.error('修改失败')
+        this.dialogTableVisible = false
       })
     },
-    resetForm(){
-      this.dialogTableVisible = false;
+    resetForm() {
+      this.dialogTableVisible = false
     },
     handleImageScucess(file) {
       console.log(file)
-      this.editTableData.path = file.data.imgPath;
+      this.editTableData.path = file.data.imgPath
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      console.log(`每页 ${val} 条`)
+      this.currentPage = val
+      this.getData()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.currentPage = val
+      this.getData()
+      console.log(`当前页: ${val}`)
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .name {
@@ -243,5 +250,11 @@ export default {
 
 .clearfix:after {
   clear: both;
+}
+.bq-descripe{
+  display: inline-block;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

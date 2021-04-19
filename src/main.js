@@ -25,7 +25,8 @@ Vue.use(Element, {
   size: 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
 })
-Vue.use(Request,'http://120.77.250.76:3000/api/')
+// Vue.use(Request, 'http://120.77.250.76:3000/api/')
+Vue.use(Request, 'http://127.0.0.1:3000/api/')
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

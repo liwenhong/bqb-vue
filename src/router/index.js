@@ -210,38 +210,41 @@ export const asyncRouterMap = [
       { path: 'topData', component: _import('handUpload/topData'), name: 'topSerieBq', meta: { title: 'topSerieBq', icon: 'table' }},
       { path: 'newData', component: _import('handUpload/newData'), name: 'showIndexNewData', meta: { title: 'showIndexNewData', icon: 'table' }},
       { path: 'noShowIndexNewData', component: _import('handUpload/noShowIndexNew'), name: 'noShowIndexNew', meta: { title: 'noShowIndexNew', icon: 'table' }},
-      { path: 'noHotAndTopData', component: _import('handUpload/noH_T_Data'), name: 'noHotAndTopData', meta: { title: 'noHotAndTopData', icon: 'table' }}
+      { path: 'noHotAndTopData', component: _import('handUpload/noH_T_Data'), name: 'noHotAndTopData', meta: { title: 'noHotAndTopData', icon: 'table' }},
+      { path: 'gifAdd', component: _import('handUpload/gif/index'), name: 'gifAdd', meta: { title: 'gifAdd', icon: 'table' }},
+      { path: 'gifList', component: _import('handUpload/gif/list'), name: 'gifList', meta: { title: 'gifList', icon: 'table' }}
+
     ]
   },
 
   {
-    path:'/search',
-    component:Layout,
-    redirct:'noredirect',
-    name:'search',
-    meta:{
-      title:'search',
-      icon:'people'
+    path: '/search',
+    component: Layout,
+    redirct: 'noredirect',
+    name: 'search',
+    meta: {
+      title: 'search',
+      icon: 'people'
     },
-    children:[
-      {path:'add-keyword',component:_import('search/addKeyWord'),name:'addKeyWord',meta:{title:'addKeyWord',icon:'table'}},
-      {path:'edit-keyword',component:_import('search/editKeyWord'),name:'editKeyWord',meta:{title:'editKeyWord',icon:'table'}}
+    children: [
+      { path: 'add-keyword', component: _import('search/addKeyWord'), name: 'addKeyWord', meta: { title: 'addKeyWord', icon: 'table' }},
+      { path: 'edit-keyword', component: _import('search/editKeyWord'), name: 'editKeyWord', meta: { title: 'editKeyWord', icon: 'table' }}
     ]
   },
-  //素材管理
+  // 素材管理
   {
-    path:'/source',
-    component:Layout,
-    redirct:'noredirect',
-    name:'source',
-    meta:{
-      title:'source',
-      icon:'people'
+    path: '/source',
+    component: Layout,
+    redirct: 'noredirect',
+    name: 'source',
+    meta: {
+      title: 'source',
+      icon: 'people'
     },
-    children:[
-      {path:'addSource',component:_import('source/addSource'),name:'addSource',meta:{title:'addSource',icon:'table'}},
-      {path:'editSource',component:_import('source/editSource'),name:'editSource',meta:{title:'editSource',icon:'table'}},
-      {path:'editSourceList',component:_import('source/editSourceList'),name:'editSourceList',meta:{title:'editSourceList',icon:'table'}}
+    children: [
+      { path: 'addSource', component: _import('source/addSource'), name: 'addSource', meta: { title: 'addSource', icon: 'table' }},
+      { path: 'editSource', component: _import('source/editSource'), name: 'editSource', meta: { title: 'editSource', icon: 'table' }},
+      { path: 'editSourceList', component: _import('source/editSourceList'), name: 'editSourceList', meta: { title: 'editSourceList', icon: 'table' }}
     ]
   },
 
