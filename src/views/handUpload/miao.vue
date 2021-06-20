@@ -3,7 +3,7 @@
 
       <!-- 筛选 -->
       <div class="filter-container">
-        <div class="filter-item">
+        <!-- <div class="filter-item">
           <label>选择类型：</label>
          <el-select v-model="value" placeholder="请选择">
             <el-option
@@ -13,7 +13,7 @@
               :value="item.value">
             </el-option>
           </el-select>
-        </div>
+        </div> -->
         <div class="filter-item">
           <label>是否显示在首页：</label>
           <el-radio v-model="radio" :label="true">是</el-radio>
@@ -154,18 +154,7 @@ export default {
       total: 0,
       curpage: 1,
       pageSize: 15,
-      options: [{
-        value: '1',
-        label: '最新表情'
-      }, {
-        value: '3',
-        label: '汪星人'
-      },
-      {
-        value: '4',
-        label: '喵星人'
-      }],
-      value: '1',
+      value: '4',
       loading: {
         table: false
       },
@@ -173,7 +162,7 @@ export default {
     }
   },
   mounted() {
-    this.getTypeList(1, true)
+    this.getTypeList(4, true)
   },
   methods: {
     getTypeList(type, isIndex) {

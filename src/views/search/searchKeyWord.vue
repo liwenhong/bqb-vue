@@ -1,26 +1,13 @@
 <template>
   <div>
-
       <!-- 筛选 -->
       <div class="filter-container">
         <div class="filter-item">
-          <label>选择类型：</label>
-         <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
+          <!-- <label>关键词：</label> -->
+          <el-input placeholder="请输入表情包关键词" v-model="keyword" />
         </div>
         <div class="filter-item">
-          <label>是否显示在首页：</label>
-          <el-radio v-model="radio" :label="true">是</el-radio>
-          <el-radio v-model="radio" :label="false">否</el-radio>
-        </div>
-        <div class="filter-item">
-          <el-button icon="el-icon-search" type="primary" size="small" @click="getTypeList(value,radio)" :loading="loading.table">搜索</el-button>
+          <el-button icon="el-icon-search" type="primary" size="small" @click="getTypeList()" :loading="loading.table">搜索</el-button>
         </div>
       </div>
 
@@ -145,7 +132,7 @@
 </template>
 <script>
 export default {
-  name: 'editSource',
+  name: 'searchKeyWord',
   data: function() {
     return {
       tableData: [],
@@ -154,34 +141,24 @@ export default {
       total: 0,
       curpage: 1,
       pageSize: 15,
-      options: [{
-        value: '1',
-        label: '最新表情'
-      }, {
-        value: '3',
-        label: '汪星人'
-      },
-      {
-        value: '4',
-        label: '喵星人'
-      }],
-      value: '1',
+      keyword: '',
       loading: {
         table: false
-      },
-      radio: true
+      }
     }
   },
   mounted() {
-    this.getTypeList(1, true)
+
   },
   methods: {
-    getTypeList(type, isIndex) {
-      this.loading.table = true
-      if (type) {
-        type = parseInt(type)
+    getTypeList() {
+      //  判断有没有关键词
+      if (!this.keyword) {
+        this.$message.error('请输入表情包关键词')
+        return
       }
-      this.$get('bq/queryNewBq', { isShowIndex: isIndex, typeId: type, pageSize: this.pageSize, curPage: this.curpage }).then(res => {
+      this.loading.table = true
+      this.$get('bq/search', { pageSize: this.pageSize, curPage: this.curpage, keyword: this.keyword }).then(res => {
         this.total = res.data.count
         this.tableData = res.data.rows
         this.loading.table = false

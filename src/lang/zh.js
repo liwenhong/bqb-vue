@@ -70,7 +70,10 @@ export default {
     noShowIndexNew: '最新表情(不展示首页)',
     noHotAndTopData: '系列（不包含热门跟置顶）',
     gifAdd: 'gif上传',
-    gifList: 'gif列表'
+    gifList: 'gif列表',
+    wang: '汪星人',
+    miao: '喵星人',
+    searchKeyWord: '搜索表情包'
 
   },
   navbar: {

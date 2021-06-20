@@ -19,7 +19,10 @@ import { getToken, uploadImg } from '@/api/qiniu'
 export default {
   name: 'singleImageUpload3',
   props: {
-    autoUpload: false
+    autoUpload: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
 

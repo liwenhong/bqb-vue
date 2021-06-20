@@ -1,6 +1,6 @@
 <template>
   <div class="upload-container">
-    <el-upload  class="img-upload" :data="dataObj" multiple :auto-upload="false" list-type="picture-card" name="avatar" action="http://120.77.250.76:3000/api/file/uploadToQiNiu"
+    <el-upload  class="img-upload" :data="dataObj" multiple :auto-upload="false" list-type="picture-card" name="avatar" action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
       :on-success="handleImageScucess" :on-remove="rmImage" :before-upload="beforeUpload" ref="uploadimgs">
       <i class="el-icon-plus"></i>
       <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div> -->

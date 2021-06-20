@@ -39,7 +39,7 @@
                 class="upload-demo"
                 ref="upload"
                 name="avatar"
-                action="http://120.77.250.76:3000/api/file/uploadToQiNiu"
+                action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
                 :on-success="handleImageScucess"
                 >
                 <el-button slot="trigger" size="small" type="primary">修改图片</el-button>

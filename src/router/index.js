@@ -209,6 +209,8 @@ export const asyncRouterMap = [
       { path: 'hotData', component: _import('handUpload/hotData'), name: 'hotSerieBq', meta: { title: 'hotSerieBq', icon: 'table' }},
       { path: 'topData', component: _import('handUpload/topData'), name: 'topSerieBq', meta: { title: 'topSerieBq', icon: 'table' }},
       { path: 'newData', component: _import('handUpload/newData'), name: 'showIndexNewData', meta: { title: 'showIndexNewData', icon: 'table' }},
+      { path: 'wang', component: _import('handUpload/wang'), name: 'wang', meta: { title: 'wang', icon: 'table' }},
+      { path: 'miao', component: _import('handUpload/miao'), name: 'miao', meta: { title: 'miao', icon: 'table' }},
       { path: 'noShowIndexNewData', component: _import('handUpload/noShowIndexNew'), name: 'noShowIndexNew', meta: { title: 'noShowIndexNew', icon: 'table' }},
       { path: 'noHotAndTopData', component: _import('handUpload/noH_T_Data'), name: 'noHotAndTopData', meta: { title: 'noHotAndTopData', icon: 'table' }},
       { path: 'gifAdd', component: _import('handUpload/gif/index'), name: 'gifAdd', meta: { title: 'gifAdd', icon: 'table' }},
@@ -228,7 +230,8 @@ export const asyncRouterMap = [
     },
     children: [
       { path: 'add-keyword', component: _import('search/addKeyWord'), name: 'addKeyWord', meta: { title: 'addKeyWord', icon: 'table' }},
-      { path: 'edit-keyword', component: _import('search/editKeyWord'), name: 'editKeyWord', meta: { title: 'editKeyWord', icon: 'table' }}
+      { path: 'edit-keyword', component: _import('search/editKeyWord'), name: 'editKeyWord', meta: { title: 'editKeyWord', icon: 'table' }},
+      { path: 'search-keyword', component: _import('search/searchKeyWord'), name: 'searchKeyWord', meta: { title: 'searchKeyWord', icon: 'table' }}
     ]
   },
   // 素材管理
