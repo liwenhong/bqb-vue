@@ -9,7 +9,7 @@
         <el-card :body-style="{ padding: '0px' }">
           <img :src="o.path" class="image">
           <div style="padding: 14px;">
-            <span>{{o.imgDescribe}}</span>
+            <span class="bq-describe">{{o.imgDescribe}}</span>
             <div class="bottom clearfix">
               <time class="time">{{o.updatedAt.substr(0,10)}}</time>
               <el-button type="text" class="button" @click="editBq(o.id,o)">编辑</el-button>
@@ -34,12 +34,12 @@
           <el-form-item label="图片">
             <!-- <el-input v-model="editTableData.name"></el-input> -->
             <div>
-              <img  :src="editTableData.path" alt="">
+              <img class="common-imgwidth" :src="editTableData.path" alt="">
               <el-upload
                 class="upload-demo"
                 ref="upload"
                 name="avatar"
-                action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
+                action="https://api.doutub.com/api/file/uploadMulterToQN"
                 :on-success="handleImageScucess"
                 >
                 <el-button slot="trigger" size="small" type="primary">修改图片</el-button>
@@ -89,109 +89,108 @@
 </template>
 
 <script>
-import { getHotData } from '@/api/bqb'
 export default {
   data() {
     return {
       currentDate: new Date(),
-      currentPage:1,
-      pageSize:5,
-      topLists:[],
-      total:0,
-      dialogTableVisible:false,
-      editTableData:{}
-    };
+      currentPage: 1,
+      pageSize: 5,
+      topLists: [],
+      total: 0,
+      dialogTableVisible: false,
+      editTableData: {}
+    }
   },
-  mounted(){
-    this.getData();
+  mounted() {
+    this.getData()
   },
   methods: {
-    addSerieById(serieId){
+    addSerieById(serieId) {
       console.log(serieId)
-      this.$router.push({name:'addSerieBq', params: { serieId: serieId}})
+      this.$router.push({ name: 'addSerieBq', params: { serieId: serieId }})
     },
-    getData(){
+    getData() {
       // getHotData(this.currentPage,this.pageSize).then(res => {
       //   this.total = res.data.count;
       //   this.topLists = res.data.data;
       // }).catch(error => {
       //   console.log(error);
       // })
-      this.$get("bq/querySerieBq",{curPage:this.currentPage,pageSize:this.pageSize,isHot:false,isTop:true}).then(res => {
-        this.topLists = res.data.lists;
-        this.total = res.data.total;
+      this.$get('bq/querySerieBq', { curPage: this.currentPage, pageSize: this.pageSize, isHot: false, isTop: true }).then(res => {
+        this.topLists = res.data.lists
+        this.total = res.data.total
       })
     },
-    serieDel(serieId){
+    serieDel(serieId) {
       this.$confirm('确定删除该系列表情, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          //删除，更新
-          this.$post("bq/delSerieBq",{serieId:serieId}).then(res => {
-            this.$message({
-              type: 'info',
-              message: '删除成功'
-            });
-            this.getData();
-          }).catch(error => {
-            this.$message({
-              type: 'info',
-              message: '删除失败'
-            });
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        // 删除，更新
+        this.$post('bq/delSerieBq', { serieId: serieId }).then(res => {
+          this.$message({
+            type: 'info',
+            message: '删除成功'
           })
+          this.getData()
         }).catch(() => {
-          // this.$message({
-          //   type: 'info',
-          //   message: '已取消删除'
-          // });
-        });
+          this.$message({
+            type: 'info',
+            message: '删除失败'
+          })
+        })
+      }).catch(() => {
+        // this.$message({
+        //   type: 'info',
+        //   message: '已取消删除'
+        // });
+      })
     },
-    delById(id){
-      this.$post("bq/delBq",{id:id}).then(res =>{
+    delById(id) {
+      this.$post('bq/delBq', { id: id }).then(res => {
         this.$message({
           type: 'info',
           message: '删除成功'
-        });
-        this.getData();
-      }).catch(error => {
+        })
+        this.getData()
+      }).catch(() => {
         this.$message({
           type: 'warning',
           message: '删除失败'
-        });
+        })
       })
     },
-    editBq(id,item){
-      this.dialogTableVisible = true;
-      this.editTableData = item;
+    editBq(id, item) {
+      this.dialogTableVisible = true
+      this.editTableData = item
     },
-    submitForm(){
-      console.log(this.editTableData);
-      this.$post("bq/updateBq",this.editTableData).then(res => {
-        this.$message("修改成功")
-        this.dialogTableVisible = false;
-      }).catch(error => {
-        this.$message.error("修改失败")
-        this.dialogTableVisible = false;
+    submitForm() {
+      console.log(this.editTableData)
+      this.$post('bq/updateBq', this.editTableData).then(res => {
+        this.$message('修改成功')
+        this.dialogTableVisible = false
+      }).catch(() => {
+        this.$message.error('修改失败')
+        this.dialogTableVisible = false
       })
     },
-    resetForm(){
-      this.dialogTableVisible = false;
+    resetForm() {
+      this.dialogTableVisible = false
     },
     handleImageScucess(file) {
       console.log(file)
-      this.editTableData.path = file.data.imgPath;
+      this.editTableData.path = file.data.imgPath
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      console.log(`每页 ${val} 条`)
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      console.log(`当前页: ${val}`)
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .name {

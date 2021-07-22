@@ -3,9 +3,9 @@ import request from '@/utils/request'
 import qs from 'qs'
 import axios from 'axios'
 
-const base_url = 'http://120.77.250.76:3000/api/' // 阿里云环境
+const base_url = 'https://api.doutub.com/api/' // 阿里云环境
 // const base_url = 'http://127.0.0.1:3000/api/' // 本地环境
-// const base_url = 'http://120.77.250.76:3000/api/'
+// const base_url = 'https://api.doutub.com/api/'
 
 /**
  * 上传图片

@@ -9,7 +9,7 @@
         <el-card :body-style="{ padding: '0px' }">
           <img :src="o.path" class="image">
           <div style="padding: 14px;">
-            <span>{{o.imgDescribe}}</span>
+            <span class="bq-describe">{{o.imgDescribe}}</span>
             <div class="bottom clearfix">
               <time class="time">{{o.updatedAt.substr(0,10)}}</time>
               <el-button type="text" class="button" @click="editBq(o.id,o)">编辑</el-button>
@@ -39,7 +39,7 @@
                 class="upload-demo"
                 ref="upload"
                 name="avatar"
-                action="http://120.77.250.76:3000/api/file/uploadToQiNiu"
+                action="https://api.doutub.com/api/file/uploadMulterToQN"
                 :on-success="handleImageScucess"
                 >
                 <el-button slot="trigger" size="small" type="primary">修改图片</el-button>
@@ -89,7 +89,6 @@
 </template>
 
 <script>
-import { getHotData } from '@/api/bqb'
 export default {
   data() {
     return {
@@ -136,7 +135,7 @@ export default {
             message: '删除成功'
           })
           this.getData()
-        }).catch(error => {
+        }).catch(() => {
           this.$message({
             type: 'info',
             message: '删除失败'
@@ -156,7 +155,7 @@ export default {
           message: '删除成功'
         })
         this.getData()
-      }).catch(error => {
+      }).catch(() => {
         this.$message({
           type: 'warning',
           message: '删除失败'
@@ -172,7 +171,7 @@ export default {
       this.$post('bq/updateBq', this.editTableData).then(res => {
         this.$message('修改成功')
         this.dialogTableVisible = false
-      }).catch(error => {
+      }).catch(() => {
         this.$message.error('修改失败')
         this.dialogTableVisible = false
       })

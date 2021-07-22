@@ -38,12 +38,12 @@
           <el-form-item label="图片">
             <!-- <el-input v-model="editTableData.name"></el-input> -->
             <div>
-              <img  :src="editTableData.path" alt="">
+              <img class="common-imgwidth" :src="editTableData.path" alt="">
               <el-upload
                 class="upload-demo"
                 ref="upload"
                 name="avatar"
-                action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
+                action="https://api.doutub.com/api/file/uploadMulterToQN"
                 :on-success="handleImageScucess"
                 >
                 <el-button slot="trigger" size="small" type="primary">修改图片</el-button>

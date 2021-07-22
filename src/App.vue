@@ -18,5 +18,16 @@
 .el-upload--picture-card{
   border: 0 !important;
 }
+.bq-describe{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 36px;
+}
+.common-imgwidth {
+  width: 200px
+}
 </style>
 

@@ -99,12 +99,12 @@
           <el-form-item label="图片">
             <!-- <el-input v-model="editTableData.name"></el-input> -->
             <div>
-              <img  :src="editTableData.path" alt="">
+              <img style="width: 200px;" :src="editTableData.path" alt="">
               <el-upload
                 class="upload-demo"
                 ref="upload"
                 name="avatar"
-                action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
+                action="https://api.doutub.com/api/file/uploadMulterToQN"
                 :on-success="handleImageScucess"
                 >
                 <el-button slot="trigger" size="small" type="primary">修改图片</el-button>
@@ -165,12 +165,9 @@ export default {
     this.getTypeList(4, true)
   },
   methods: {
-    getTypeList(type, isIndex) {
+    getTypeList(type, isIndex = true) {
       this.loading.table = true
-      if (type) {
-        type = parseInt(type)
-      }
-      this.$get('bq/queryNewBq', { isShowIndex: isIndex, typeId: type, pageSize: this.pageSize, curPage: this.curpage }).then(res => {
+      this.$get('bq/queryNewBq', { isShowIndex: isIndex, typeId: this.value, pageSize: this.pageSize, curPage: this.curpage }).then(res => {
         this.total = res.data.count
         this.tableData = res.data.rows
         this.loading.table = false

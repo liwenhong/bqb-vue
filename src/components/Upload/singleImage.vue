@@ -4,7 +4,7 @@
               class="upload-demo"
               drag
               list-type="picture-card"
-              action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
+              action="https://api.doutub.com/api/file/uploadMulterToQN"
               multiple
               :auto-upload="autoUpload" :on-success="handleImageScucess" :on-remove="rmImage" :before-upload="beforeUpload" ref="uploadimgs" name="avatar">
               <i class="el-icon-upload"></i>

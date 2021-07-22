@@ -99,12 +99,12 @@
           <el-form-item label="图片">
             <!-- <el-input v-model="editTableData.name"></el-input> -->
             <div>
-              <img  :src="editTableData.path" alt="">
+              <img style="width: 200px;" :src="editTableData.path" alt="">
               <el-upload
                 class="upload-demo"
                 ref="upload"
                 name="avatar"
-                action="http://120.77.250.76:3000/api/file/uploadMulterToQN"
+                action="https://api.doutub.com/api/file/uploadMulterToQN"
                 :on-success="handleImageScucess"
                 >
                 <el-button slot="trigger" size="small" type="primary">修改图片</el-button>
@@ -197,7 +197,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           })
-          self.getTypeList()
+          self.getTypeList(3, true)
         })
       }).catch(() => {
         this.$message({
@@ -211,7 +211,7 @@ export default {
       this.$post('bq/updateBq', this.editTableData).then(res => {
         this.$message('修改成功')
         this.dialogTableVisible = false
-        this.getTypeList()
+        this.getTypeList(3, true)
       }).catch(() => {
         this.$message.error('修改失败')
         this.dialogTableVisible = false
@@ -223,12 +223,12 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
       this.pageSize = val
-      this.getTypeList()
+      this.getTypeList(3, true)
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`)
       this.curpage = val
-      this.getTypeList()
+      this.getTypeList(3, true)
     },
     handleImageScucess(file) {
       console.log(file)
